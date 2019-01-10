@@ -1,0 +1,29 @@
+/dist/
+bazel-*
+e2e_test.*
+node_modules
+bower_components
+tools/gulp-tasks/cldr/cldr-data/
+.idea
+.settings
+.vscode
+/template/
+/backup/
+angular.json
+
+# Don't check in secret files
+*secret.js
+
+# Ignore npm/yarn debug log
+npm-debug.log
+yarn-error.log
+
+# build-analytics
+.build-analytics
+
+# rollup-test output
+/modules/rollup-test/dist/
+build.sh
+pbuild.sh
+/multi-trading.angular.code-workspace
+/.project
