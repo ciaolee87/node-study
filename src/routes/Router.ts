@@ -1,6 +1,6 @@
 import express from 'express';
 
-export abstract class ExpressRouter {
+export abstract class Router {
 	protected router: express.Router;
 
 	protected constructor() {

@@ -1,6 +1,6 @@
-import {ExpressRouter} from "./ExpressRouter";
+import {Router} from "./Router";
 
-export class IndexRouter extends ExpressRouter {
+export class IndexRouter extends Router {
 	constructor() {
 		super();
 	}

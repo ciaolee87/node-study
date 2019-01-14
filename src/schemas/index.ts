@@ -1,8 +1,6 @@
 import * as mongoose from 'mongoose';
 
 export class MongooseConnector {
-
-
 	constructor() {
 		this.connect();
 		this.setCallback();
