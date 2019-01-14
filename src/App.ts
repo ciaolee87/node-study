@@ -5,9 +5,13 @@ import cookieParser from "cookie-parser";
 import {IndexRouter} from "./routes/IndexRouter";
 import {NextFunction, Request, Response} from "express-serve-static-core";
 import createHttpError from "http-errors";
+import session from "express-session";
+import flash from 'connect-flash';
+
 
 class App {
     public app: express.Application;
+
 
     public static bootstrap(): App {
         return new App();
@@ -38,6 +42,21 @@ class App {
 
         // static 파일 위치 설정(그림 등)
         this.app.use(express.static(path.join(__dirname, './assets')));
+
+        // session 설정
+        this.app.use(session({
+            secret: 'nodebirdsecre',
+            resave: false,
+            saveUninitialized: false,
+            cookie: {
+                httpOnly: true,
+                secure: false
+            }
+        }));
+
+
+        // flash 이용
+        this.app.use(flash());
     }
 
     setRouters() {
@@ -45,18 +64,19 @@ class App {
 
         // 지정되지 않은 요청이라면 에러를 발생 시킨다
         this.app.use((req: Request, res: Response, next: NextFunction) => {
-            next(createHttpError(404));
+            const err = new Error('Page not found');
+            err.name = '404';
+            next(err);
         });
     }
 
     setErrorHandler() {
-        this.app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+        this.app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
             res.locals['message'] = err['message'];
             res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-
             // render the error page
-            res.status(err['status'] || 500);
+            res.status(Number(err.name) || 500);
             res.render('error');
         });
     }
